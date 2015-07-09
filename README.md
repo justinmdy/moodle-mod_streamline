@@ -3,12 +3,12 @@ This is the main repo for our activity module.
 
 Firstly, fork this repo into your own account. Then to install it on 
 your moodle server, navigate to moodle/mod/ and run:
-* git clone https://github.com/username/moodle-mod_streamline.git streamline
+* git clone https://github.com/username/moodle-mod_streamline.git streamline <br>
 Where username is your git username.
 * Note the module has been setup for the 'streamline' name and will not work if changed.
 
 Finally, make a new branch for your development:
-* git checkout -b branchName
+* git checkout -b branchName <br>
 Where branchName is whatever you want it to be. Try to be specific, don't
 just put test1 or something.
 
