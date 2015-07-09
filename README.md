@@ -3,24 +3,13 @@ This is the main repo for our activity module.
 
 Firstly, fork this repo into your own account. Then to install it on 
 your moodle server, navigate to moodle/mod/ and run:
-  git clone https://github.com/<username>/moodle-mod_streamline.git streamline
-Where <username> is your git username.
-# Note the module has been setup for the 'streamline' name and will not work if changed.
-
-Once its in your mod folder, you may have to follow these few extra steps:
-* Go to Settings > Site Administration > Development > XMLDB editor
-  and modify the module's tables.
-  Make sure, that the web server has write-access to the db/ folder.
-  You need at least one table, even if your module doesn't use it.
-
-* Modify version.php and set the initial version of you module.
-
-* Visit Settings > Site Administration > Notifications, you should find
-  the module's tables successfully created
+* git clone https://github.com/username/moodle-mod_streamline.git streamline
+Where username is your git username.
+* Note the module has been setup for the 'streamline' name and will not work if changed.
 
 Finally, make a new branch for your development:
-  git checkout -b <branchName>
-Where <branchName> is whatever you want it to be. Try to be specific, don't
+* git checkout -b branchName
+Where branchName is whatever you want it to be. Try to be specific, don't
 just put test1 or something.
 
 Once your module is in a stable, working condition, submit a pull request.
