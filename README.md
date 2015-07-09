@@ -1,5 +1,4 @@
 # Streamline Setup
-=====================================================================
 This is the main repo for our activity module.
 
 Firstly, fork this repo into your own account. Then to install it on 
@@ -30,8 +29,8 @@ repo. Only once you have completed your module, should you attempt to merge
 your branch with the master. Once successful, you should go through the same
 pull request process.
 
-# Original Setup Readme
 =====================================================================
+# Original Setup Readme
 The following steps should get you up and running with
 this module template code.
 
