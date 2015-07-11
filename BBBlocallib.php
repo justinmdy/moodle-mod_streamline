@@ -26,7 +26,7 @@ function bigbluebuttonbn_rand_string() {
 }
 
 function bigbluebuttonbn_log(array $bbbsession, $event) {
-    global $DB, $CFG;
+    global $DB;
 
     $log = new stdClass();
     
@@ -43,14 +43,10 @@ function bigbluebuttonbn_log(array $bbbsession, $event) {
  ////////////////////////////
 //  BigBlueButton API Calls  //
  ////////////////////////////
-function bigbluebuttonbn_getJoinURL( $meetingID, $userName, $PW, $SALT, $URL, $clientURL ) {
-    global $DB, $CFG;
-	$url_join = $URL."api/join?";
-	$id = optional_param('id', 0, PARAM_INT); // course_module ID, or
-    $params = 'meetingID='.urlencode($meetingID).'&fullName='.urlencode($userName).'&password='.urlencode($PW) . '&redirect=true&clientURL=' . $CFG->wwwroot . '/mod/streamline/streamline_view.php?id=' . $id;
-	echo ' FROM LIB' . $id . 'FROM LIB';
-    return ($url_join.$params.'&checksum='.sha1("join".$params.$SALT));
-	//$CFG->wwwroot 192.168.160.1/moodle/
+function bigbluebuttonbn_getJoinURL( $meetingID, $userName, $PW, $SALT, $URL ) {
+    $url_join = $URL."api/join?";
+    $params = 'meetingID='.urlencode($meetingID).'&fullName='.urlencode($userName).'&password='.urlencode($PW);
+    return ($url_join.$params.'&checksum='.sha1("join".$params.$SALT) );
 }
 
 function bigbluebuttonbn_getCreateMeetingURL($name, $meetingID, $attendeePW, $moderatorPW, $welcome, $logoutURL, $SALT, $URL, $record = 'false', $duration=0, $voiceBridge=0, $metadata = array() ) {
@@ -163,7 +159,7 @@ function bigbluebuttonbn_getMeetingInfoArray( $meetingID, $modPW, $URL, $SALT ) 
         return array('returncode' => $xml->returncode, 'message' => $xml->message, 'messageKey' => $xml->messageKey );
     }
     else if($xml && $xml->returncode == 'SUCCESS'){ //If there were meetings already created
-        return array('returncode' => $xml->returncode, 'meetingID' => $xml->meetingID, 'moderatorPW' => $xml->moderatorPW, 'attendeePW' => $xml->attendeePW, 'hasBeenForciblyEnded' => $xml->hasBeenForciblyEnded, 'running' => $xml->running, 'recording' => $xml->recording, 'startTime' => $xml->startTime, 'endTime' => $xml->endTime, 'participantCount' => $xml->participantCount, 'moderatorCount' => $xml->moderatorCount, 'attendees' => $xml->attendees, 'metadata' => $xml->metadata );
+        return array( 'meetingID' => $xml->meetingID, 'moderatorPW' => $xml->moderatorPW, 'attendeePW' => $xml->attendeePW, 'hasBeenForciblyEnded' => $xml->hasBeenForciblyEnded, 'running' => $xml->running, 'recording' => $xml->recording, 'startTime' => $xml->startTime, 'endTime' => $xml->endTime, 'participantCount' => $xml->participantCount, 'moderatorCount' => $xml->moderatorCount, 'attendees' => $xml->attendees, 'metadata' => $xml->metadata );
     }
     else if( ($xml && $xml->returncode == 'FAILED') || $xml) { //If the xml packet returned failure it displays the message to the user
         return array('returncode' => $xml->returncode, 'message' => $xml->message, 'messageKey' => $xml->messageKey);
