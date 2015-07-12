@@ -1,16 +1,158 @@
 
 	<?php
 	require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
+	require_once(dirname(__FILE__).'/locallib.php');
 	require_once(dirname(__FILE__).'/lib.php');
+	
+	$bbbsession['salt'] = trim($CFG->BigBlueButtonSaltKey);
+	$bbbsession['url'] = trim(trim($CFG->ServerURLforBigBlueButton),'/').'/';
+	$id = optional_param('id', 0, PARAM_INT);
+	global $DB;
+	$cm = get_coursemodule_from_id('streamline', $id, 0, false, MUST_EXIST);
+	$streamline = $DB->get_record('streamline', array('id' => $cm->instance), '*', MUST_EXIST);
+	$meeting = $streamline -> meetingid;
+	$course = $streamline -> course;
+	$id = $streamline -> id;
+	$dash = "-";
+	$meetingid=$meeting.$dash.$course.$dash.$id;
+
+	$meetingRunningUrl = bigbluebuttonbn_getIsMeetingRunningURL( $meetingid, $bbbsession['url'], $bbbsession['salt'] );
+	$recordingsURL = bigbluebuttonbn_getRecordingsArray($meetingid, $bbbsession['url'], $bbbsession['salt'] );
+	
+	$userID = $USER->id;
+
+    //$context = context_module::instance($cm->id);
+	$context = get_context_instance(CONTEXT_COURSE,$COURSE->id);
+	$roles = get_user_roles($context, $USER->id, true);
+	
+	$participants = $streamline->participants;
+	
+	if( $streamline->participants == null || $streamline->participants == "[]" ){
+    //The room that is being used comes from a previous version
+		$moderator = has_capability('mod/streamline:moderate', $context);
+	} else {
+		$moderator = bigbluebuttonbn_is_moderator($userID, $roles, $participants);
+	}
+	$administrator = has_capability('moodle/category:manage', $context);
+
 	//104.155.215.138
 	global $CFG;
 	$ipaddress = trim($CFG->ServerURLforBigBlueButton);
-	echo $variable2 = substr($ipaddress, 0, strpos($ipaddress, "b"));
+	$variable2 = substr($ipaddress, 0, strpos($ipaddress, "b"));
 	$variable = trim(trim($variable2),'/').'/';
 	$moodle_dir = $CFG->wwwroot;
 	
 	?>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="streamline.css">
+	
+	<script>
+		  console.log("Meeting 13 Test");
+		  var meeting = <?php echo json_encode($meetingid); ?>; 
+		  var meetingRunningUrl = <?php echo json_encode($meetingRunningUrl); ?>;
+		  var recordings = <?php echo json_encode($recordingsURL); ?>;
+		  var userID = <?php echo json_encode($userID); ?>;
+		  var roles = <?php echo json_encode($roles); ?>;
+		  var participants = <?php echo json_encode($participants); ?>;
+		  var moderator = <?php echo json_encode($moderator); ?>;
+		  var administrator = <?php echo json_encode($administrator); ?>;
 
+		  
+			console.log("User ID: " + userID);	
+			console.log("Roles: " + roles);
+			console.log("Participants: " + participants);			
+	
+			
+		console.log("Moderator: " + moderator);
+		console.log("Admin: " + administrator);
+		  console.log(meeting);
+		  console.log(meetingRunningUrl);
+		  console.log(recordingUrl);
+	</script>
+	
+	<script>
+		var meetingRunningUrl = <?php echo json_encode($meetingRunningUrl); ?>;
+		var moderator = <?php echo json_encode($moderator); ?>;
+		var administrator = <?php echo json_encode($administrator); ?>;
+		  
+		var sessionRunning = false;
+		var url = "" 
+		
+		// A $( document ).ready() block.
+		$( document ).ready(function() {
+			BBBSessionRunning();
+			if(sessionRunning || administrator || moderator) {
+				$("#liveView").css("visibility", "visible");
+				$("#recordingView").css("display", "none")			
+			} else {
+				$("#liveView").css("display", "none")
+				$("#recordingView").css("visibility", "visible");
+				try{
+					console.log("Recording Response");
+					console.log(recordings);
+					var url=recordings[0].playbacks.presentation.url;
+					$("#recordingView").html("<iframe class='recording' width='100%' height='100%' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='"+url+"'></iframe>");  
+				}
+				catch(e) // This runs when there is error
+				{
+					$("#recordingView").html("No recordings available for this lecture");
+				}				
+				//loadRecording();
+			}
+			
+			console.log(sessionRunning);
+
+		});
+		
+		function loadRecording() {
+			$.ajax({
+				  type: "GET",
+				  url: recordingUrl,
+				  dataType: "xml",
+				  contentType: "text/xml; charset=\"utf-8\"",
+				  complete: function(xmlResponse) {
+					console.log(xmlResponse);
+					var recordingsResponse=xmlResponse.responseXML;
+					try{
+						console.log("Recording Response");
+						console.log(recordingsResponse);
+						var url=recordingsResponse[0].playbacks.presentation.url;
+						$("#recordingView").html("<iframe class='recording' width='100%' height='100%' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='"+url+"'></iframe>");  
+					}
+					catch(e) // This runs when there is error
+					{
+						$("#recordingView").html("No recordings available for this lecture");
+					}
+				  }
+			});
+		}
+		
+		function BBBSessionRunning() {
+			$.ajax({
+				  type: "GET",
+				  url: meetingRunningUrl,
+				  dataType: "xml",
+				  contentType: "text/xml; charset=\"utf-8\"",
+				  complete: function(xmlResponse) {
+					meetingResponse=xmlResponse.responseXML;
+					meetingRunning=meetingResponse.getElementsByTagName("running")[0];
+					running=meetingRunning.childNodes[0].nodeValue;
+					if(running == "false") {
+						sessionRunning = false;
+						console.log("Session is not running");
+						return false;
+					} else if(running == "true") {
+						sessionRunning = true;
+						console.log("Session is running");
+						return true;
+					}
+				  },
+				   async:   false
+			});
+		}
+		</script>
+	
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     <style type="text/css" media="screen">
       html, body, #flashclient                { height:50%;}
@@ -61,6 +203,7 @@
     </script>
 </head>
   <body>
+  <!--
     <div id="controls">
       <button type="button" onclick="registerListeners()">Listen for Events</button>
       <button type="button" onclick="displayBBBClient()">Show BBB Client</button>
@@ -98,44 +241,49 @@
         <button type="button" onclick="uploadPresentation()">Upload Presentation</button>
       </form>
     </div>
-
-    <div id="flashclient" style="background-color:#EEEEEE;height:900px;width:1200px;float:left;">
- 
-
-       <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="50%" height="50%" id="BigBlueButton" name="BigBlueButton" align="middle">
-          <param name="movie" value="<?php Print($variable);?>client/BigBlueButton.swf?v=216" />
-          <param name="quality" value="high" />
-          <param name="allowfullscreen" value="true" />
-          <param name="bgcolor" value="#869ca7" />
-          <param name="wmode" value="window" />
-          <param name="allowScriptAccess" value="always" />
-         
-            <object type="application/x-shockwave-flash" data="<?php Print($variable); ?>client/BigBlueButton.swf?v=VERSION" width="70%" height="90%" align="middle">
-              <param name="quality" value="high" />
-              <param name="bgcolor" value="#869ca7" />
-              <param name="allowScriptAccess" value="always" />
-              
-                <a href="http://www.adobe.com/go/getflashplayer">
-                  <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
-                </a>
-             
-           </object>
-       
-        </object>
-
-<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="50%" height="50%" id="ChatModule" name="ChatModule" align="middle">
-	<param name="url" value="http://104.199.138.224/client/ChatModule.swf?v=VERSION" />
-	<param name="uri" value="rtmp://104.199.138.224/bigbluebutton" />
-	<param name="dependsOn" value="UsersModule" />
-	<param name="privateEnabled" value="true" />
-	<param name="fontSize" value="12" />
-	<param name="colorPickerIsVisible" value="true" />
-</object>
-
-
-
-    </div>
-
+-->
+	<div id="middleContainer">
+		<div id="liveView">
+			<div id="flashclient" style="background-color:#EEEEEE;height:100%;width:100%;float:left;">
+			   <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="50%" height="50%" id="BigBlueButton" name="BigBlueButton" align="middle">
+				  <param name="movie" value="<?php Print($variable);?>client/BigBlueButton.swf?v=216" />
+				  <param name="quality" value="high" />
+				  <param name="allowfullscreen" value="true" />
+				  <param name="bgcolor" value="#869ca7" />
+				  <param name="wmode" value="window" />
+				  <param name="allowScriptAccess" value="always" />
+				 
+					<object type="application/x-shockwave-flash" data="<?php Print($variable); ?>client/BigBlueButton.swf?v=VERSION" width="100%" height="100%" align="middle">
+					  <param name="quality" value="high" />
+					  <param name="bgcolor" value="#869ca7" />
+					  <param name="allowScriptAccess" value="always" />
+					  
+						<a href="http://www.adobe.com/go/getflashplayer">
+						  <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
+						</a>
+					 
+				   </object>
+			   
+				</object>
+		<!--
+			<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="50%" height="50%" id="ChatModule" name="ChatModule" align="middle">
+				<param name="url" value="http://104.199.138.224/client/ChatModule.swf?v=VERSION" />
+				<param name="uri" value="rtmp://104.199.138.224/bigbluebutton" />
+				<param name="dependsOn" value="UsersModule" />
+				<param name="privateEnabled" value="true" />
+				<param name="fontSize" value="12" />
+				<param name="colorPickerIsVisible" value="true" />
+			</object>
+		-->
+			</div>
+		</div>
+		<div id="recordingView">
+			This is a place holder for the playback plugin
+		</div>
+	</div>
+	<div id="rightContainer">
+		Placeholder
+	</div>
     <div id="update-display"/>
     <div id="notifications" aria-live="polite" role="region" aria-label="Chat Notifications"></div>
   </body>

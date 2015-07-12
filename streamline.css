@@ -1,0 +1,45 @@
+#leftContainer {
+	box-sizing:border-box; 
+	width: 20%;
+	height: 650px;
+	position: relative;
+	float: left;
+	border: 5px solid #DFDFDF;
+	min-height: 650px;
+
+}
+#middleContainer {
+	box-sizing:border-box; 
+	width: 75%;
+	height: 650px;
+	position: relative;
+	float: left;
+	min-height: 650px;
+
+}
+
+#rightContainer {
+	box-sizing:border-box; 
+	width: 25%;
+	height: 650px;
+	position: relative;
+	float: left;
+	border: 5px solid #DFDFDF;
+	min-height: 650px;
+
+}
+
+#liveView {
+	height: 100%;
+}
+
+#recordingView {
+	height: 100%;
+	width: 100%;
+}
+
+.recording {
+	position: absolute;
+	top:0px;
+	left:0px;
+}
