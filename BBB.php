@@ -110,7 +110,7 @@
           <param name="wmode" value="window" />
           <param name="allowScriptAccess" value="always" />
          
-            <object type="application/x-shockwave-flash" data="<?php Print($variable); ?>client/BigBlueButton.swf?v=VERSION" width="70%" height="90%" align="middle">
+            <object type="application/x-shockwave-flash" data="<?php Print($variable); ?>client/BigBlueButton.swf?v=VERSION" width="100%" height="100%" align="middle">
               <param name="quality" value="high" />
               <param name="bgcolor" value="#869ca7" />
               <param name="allowScriptAccess" value="always" />
