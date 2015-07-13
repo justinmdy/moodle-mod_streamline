@@ -68,7 +68,7 @@
 		console.log("Admin: " + administrator);
 		  console.log(meeting);
 		  console.log(meetingRunningUrl);
-		  console.log(recordingUrl);
+		  console.log(recordings);
 	</script>
 	
 	<script>
@@ -77,33 +77,70 @@
 		var administrator = <?php echo json_encode($administrator); ?>;
 		  
 		var sessionRunning = false;
-		var url = "" 
-		
+
+		var recordingURL = "";
+
 		// A $( document ).ready() block.
+
 		$( document ).ready(function() {
 			BBBSessionRunning();
-			if(sessionRunning || administrator || moderator) {
-				$("#liveView").css("visibility", "visible");
-				$("#recordingView").css("display", "none")			
+			var hasRecording = isRecording(); 
+
+			if(hasRecording && (administrator || moderator)) {
+				console.log("loading options screen");
+				$("#liveView").css("height", "0px");
+				$("#recordingView").css("display", "none");	
+				$("#optionView").css("visibility", "visible");
+			} else if(sessionRunning || administrator || moderator) {
+				console.log("loading live screen");
+				$("#liveView").css("height", "100%");
+				$("#recordingView").css("display", "none");
+				$("#optionView").css("display", "none")				
 			} else {
-				$("#liveView").css("display", "none")
+				console.log("loading playback screen");
+				$("#liveView").css("display", "none");
+				$("#optionView").css("display", "none");
 				$("#recordingView").css("visibility", "visible");
-				try{
+				if(recordingURL != "") {
 					console.log("Recording Response");
 					console.log(recordings);
-					var url=recordings[0].playbacks.presentation.url;
-					$("#recordingView").html("<iframe class='recording' width='100%' height='100%' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='"+url+"'></iframe>");  
+					$("#recordingView").html("<iframe class='recording' width='100%' height='100%' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='"+recordingURL+"'></iframe>");  
 				}
-				catch(e) // This runs when there is error
-				{
+				else { // This runs when there is error
 					$("#recordingView").html("No recordings available for this lecture");
 				}				
 				//loadRecording();
 			}
-			
 			console.log(sessionRunning);
 
+			$(".playback_button").click(function() {
+				console.log("Clicked Live Button .. now loading live screen");
+				$("#recordingView").css("display", "block");
+				$("#liveView").css("display", "none");
+				$("#optionView").css("display", "none")		
+				$("#recordingView").html("<iframe class='recording' width='100%' height='100%' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='"+recordingURL+"'></iframe>");  
+			});
+		
+			$(".live_button").click(function() {
+				console.log("Clicked Live Button .. now loading live screen");
+				$("#liveView").css("height", "100%");
+				$("#recordingView").css("display", "none");
+				$("#optionView").css("display", "none")		
+			});
 		});
+
+	
+		function isRecording() {
+				try{
+					var url=recordings[0].playbacks.presentation.url;
+					recordingURL = url;
+					return true;
+				}
+				catch(e) // This runs when there is error
+				{
+					return false;
+				}			
+		}
 		
 		function loadRecording() {
 			$.ajax({
@@ -151,6 +188,7 @@
 				   async:   false
 			});
 		}
+		
 		</script>
 	
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -279,6 +317,10 @@
 		</div>
 		<div id="recordingView">
 			This is a place holder for the playback plugin
+		</div>
+		<div id="optionView">
+			<div class = "option_button playback_button">View Recording</div>
+			<div class = "option_button live_button">Start Session</div>
 		</div>
 	</div>
 	<div id="rightContainer">
