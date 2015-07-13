@@ -46,32 +46,10 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="streamline.css">
-	
-	<script>
-		  console.log("Meeting 13 Test");
-		  var meeting = <?php echo json_encode($meetingid); ?>; 
-		  var meetingRunningUrl = <?php echo json_encode($meetingRunningUrl); ?>;
-		  var recordings = <?php echo json_encode($recordingsURL); ?>;
-		  var userID = <?php echo json_encode($userID); ?>;
-		  var roles = <?php echo json_encode($roles); ?>;
-		  var participants = <?php echo json_encode($participants); ?>;
-		  var moderator = <?php echo json_encode($moderator); ?>;
-		  var administrator = <?php echo json_encode($administrator); ?>;
 
-		  
-			console.log("User ID: " + userID);	
-			console.log("Roles: " + roles);
-			console.log("Participants: " + participants);			
-	
-			
-		console.log("Moderator: " + moderator);
-		console.log("Admin: " + administrator);
-		  console.log(meeting);
-		  console.log(meetingRunningUrl);
-		  console.log(recordings);
-	</script>
-	
 	<script>
+		var meetingRunningUrl = <?php echo json_encode($meetingRunningUrl); ?>;
+		var recordings = <?php echo json_encode($recordingsURL); ?>;
 		var meetingRunningUrl = <?php echo json_encode($meetingRunningUrl); ?>;
 		var moderator = <?php echo json_encode($moderator); ?>;
 		var administrator = <?php echo json_encode($administrator); ?>;
@@ -315,16 +293,14 @@
 		-->
 			</div>
 		</div>
-		<div id="recordingView">
-			This is a place holder for the playback plugin
-		</div>
+		<div id="recordingView"></div>
 		<div id="optionView">
 			<div class = "option_button playback_button">View Recording</div>
 			<div class = "option_button live_button">Start Session</div>
 		</div>
 	</div>
 	<div id="rightContainer">
-		Placeholder
+		Placeholder for Chat
 	</div>
     <div id="update-display"/>
     <div id="notifications" aria-live="polite" role="region" aria-label="Chat Notifications"></div>
