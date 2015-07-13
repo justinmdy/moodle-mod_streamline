@@ -62,18 +62,28 @@ class mod_streamline_mod_form extends moodleform_mod {
         $mform->addRule( 'name', null, 'required', null, 'client' );
         $mform->setType('name', PARAM_TEXT);
 
+		$courseName = $course->shortname;
+		$section = optional_param('section',0,PARAM_INT);
+		print_object($url);
+		$week = ": Week ";
+		$sessionName = $courseName.$week.$section;
+        $mform->setDefault( 'name', $sessionName );
+		
+		
         $mform->addElement('textarea', 'welcome', get_string('mod_form_field_welcome','bigbluebuttonbn'), 'wrap="virtual" rows="5" cols="60"');
         $mform->addHelpButton('welcome', 'mod_form_field_welcome', 'bigbluebuttonbn');
+        $mform->setDefault( 'welcome', "Welcome to the lecture for week ".$section );
+
 
         //$mform->addElement('text', 'voicebridge', get_string('mod_form_field_voicebridge','bigbluebuttonbn'), 'maxlength="5" size="10"' );
         //$mform->setDefault( 'voicebridge', 0 );
         //$mform->addHelpButton('voicebridge', 'mod_form_field_voicebridge', 'bigbluebuttonbn');
 
-        $mform->addElement( 'checkbox', 'newwindow', get_string('mod_form_field_newwindow', 'bigbluebuttonbn') );
-        $mform->setDefault( 'newwindow', 0 );
+        //$mform->addElement( 'checkbox', 'newwindow', get_string('mod_form_field_newwindow', 'bigbluebuttonbn') );
+        //$mform->setDefault( 'newwindow', 0 );
 
-        $mform->addElement( 'checkbox', 'wait', get_string('mod_form_field_wait', 'bigbluebuttonbn') );
-        $mform->setDefault( 'wait', 1 );
+        //$mform->addElement( 'checkbox', 'wait', get_string('mod_form_field_wait', 'bigbluebuttonbn') );
+        //$mform->setDefault( 'wait', 0 );
 
         $mform->addElement('text', 'userlimit', get_string('mod_form_field_userlimit','bigbluebuttonbn'), 'maxlength="3" size="5"' );
         $mform->addHelpButton('userlimit', 'mod_form_field_userlimit', 'bigbluebuttonbn');
@@ -204,7 +214,7 @@ class mod_streamline_mod_form extends moodleform_mod {
             $mform->addElement('header', 'general', get_string('mod_form_block_record', 'bigbluebuttonbn'));
 
             $mform->addElement( 'checkbox', 'record', get_string('mod_form_field_record', 'bigbluebuttonbn') );
-            $mform->setDefault( 'record', 0 );
+            $mform->setDefault( 'record', 1 );
 	
             $mform->addElement('text', 'description', get_string('mod_form_field_description','bigbluebuttonbn'), 'maxlength="100" size="32"' );
             $mform->addHelpButton('description', 'mod_form_field_description', 'bigbluebuttonbn');
