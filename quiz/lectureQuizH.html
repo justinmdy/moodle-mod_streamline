@@ -1,0 +1,194 @@
+<html>
+
+<style>
+    .section {
+        width:250px;
+        height: 100px;
+        float:left;
+        padding:10px;      
+    }
+
+    #block1{
+
+        background-color: #222222;
+        height: 130px;
+        border-radius: 8px;
+        width: 1600px;
+    }
+
+    #block1title{
+        padding-top: 50px;
+        padding-left: 60px;
+        font-size: 300%;
+        color: #FFF;
+    }
+
+    .block2{
+        width: 1600px;
+        background-color: #333333;
+        height: 80px;
+        border-radius: 8px;        
+    }
+
+    .block2title{
+        padding-left: 50px;
+        padding-top:10px;
+        font-size: 150%;
+        color: #FFF;
+
+    }
+
+    .block2block{
+        width: 300x;
+        float:left;
+ 
+    }
+
+    .question{
+        width: 1600px;
+        background-color: #444444;
+        height: 80px;
+        border-radius: 8px;
+    }
+
+    #QT{
+        padding-top: 15px;
+        padding-left: 15px;
+        padding-right: 500px;
+    }
+
+    #Qblock{
+        width:200px;
+        float: left;
+    }
+
+    #Qblock2{
+        width:900px;
+        float: left;
+        padding-top: 20px;
+    }
+
+    .CB{
+        width: 1000px;
+    }
+
+    .frame {
+        width:1600px;
+    }
+</style>
+    <body>
+
+
+        <div id="block1">
+            <p id="block1title">
+               Design Quiz
+            </p>
+            <hr>
+
+
+        <div class="frame" >
+        <form action="lectureQuizP.php" method="post">
+            
+            <div class="frame">
+              <div class="block2">  
+
+              <div class="block2block">
+
+              <p class="block2title">Choice number:    
+              <input type="number" name="quantity" min="1" max="9" value=1></p>
+              </div>
+
+              <div class="block2block">
+              <p class="block2title">Quiz id:    
+              <input type="number" name="class" min="1" max="1000" value=1>
+              </p>
+              </div>
+
+
+             </div>
+            </div>
+
+            <hr>
+
+            <div class="question">
+
+            <div id="Qblock">    
+
+            <p class="block2title">Question: </p>
+            </div>
+
+            <div id="Qblock2">
+             <textarea id="QT" name="Question" />question</textarea>     
+            </div>
+
+            </div>
+
+            <hr>
+
+            <div class= "CB">
+
+            <div class="section">
+            <p>Choice 1:</p>
+            <textarea name="Choice1" />choice 1</textarea>
+            <br>
+            </div>
+
+            <div class="section">
+            <p>Choice 2:</p>
+            <textarea name="Choice2" />choice 2</textarea>
+            <br>
+            </div>
+
+            <div class="section">
+            <p>Choice 3:</p>
+            <textarea name="Choice3" />choice 3</textarea>
+            <br>
+            </div>
+
+            <div class="section">
+            <p>Choice 4:</p>
+            <textarea name="Choice4" />choice 4</textarea>
+            <br>
+            </div>
+
+            <div class="section">
+            <p>Choice 5:</p>
+            <textarea name="Choice5" />choice 5</textarea>
+            <br>
+            </div>
+
+            <div class="section">
+            <p>Choice 6:</p>
+            <textarea name="Choice6" />choice 6</textarea>
+            <br>
+            </div>
+
+            <div class="section">
+            <p>Choice 7:</p>
+            <textarea name="Choice7" />choice 7</textarea>
+            <br>
+            </div>
+
+            <div class="section">
+            <p>Choice 8:</p>
+            <textarea name="Choice8" />choice 8</textarea>
+            <br>
+            </div>
+
+            <div class="section">
+            <p>Choice 9:</p>
+            <textarea name="Choice9" />choice 9</textarea>
+            <br> 
+            </div>           
+
+            <div class="section">
+            <input type="submit" />
+            </div>
+
+            </div>
+        </form>
+    </div>
+    </div>
+
+    </body>
+</html>
