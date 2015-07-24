@@ -1,33 +1,48 @@
 <html>
+<style>
+</style>
 <body>
     <?php
 
-    $classNo = $_POST["class"];
+    $quizId = $_POST["class"];
 
 
     $data = simplexml_load_file("Quiz.xml")or die("Error: Cannot create object");
 
+    echo '<form action="quizreply.php" method="post">';
+
+    echo '<input type="hidden" name="quizId" value="'.$quizId.'">';
+
+    $t=1;
+
     foreach ($data->children() as $questions) {
-        if ($questions["id"] == $classNo){
+        if ($questions["id"] == $quizId){
+
+            echo $t.". ";
             echo $questions->Question."<br>";
+
             $quantity = $questions->quantity;
+            $char_A = 'A';
+
             for ($i=1; $i <= $quantity; $i++) { 
+
+              echo '<input type="checkbox" name="'.$quizId.'@'.$t.'@'.$i.'" value="1">'.$char_A++.'. ';
               $str = "Choice".$i;
               echo $questions->$str."<br>";
             }
             echo "<br>";
+            $t++;
 
         }
         
     }
 
-    echo '<form action="studentQuizP.php" method="post">
-        <input type="checkbox" name="class" value="1">A
-        <input type="checkbox" name="class" value="2">B
+    echo '
         <input type="submit">
         </form>';
 
     ?>
+
 
 </body>
 </html>

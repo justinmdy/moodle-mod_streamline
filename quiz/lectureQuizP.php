@@ -25,6 +25,13 @@
                 $str .= "<Choice".$x.">".$_POST["Choice".$x]."</Choice".$x.">\n";
             }
 
+
+            for($x = 1; $x <= $quantity; $x++){
+                if ($_POST["C".$x]==1){
+                    $str .= "<Answer".$x.">".$x."</Answer".$x.">\n";
+                }
+            }
+
             $str .= "</Q>\n";
             $str .= "</Quiz>";
 
@@ -37,8 +44,6 @@
  
             fwrite($openFile,$_POST["Question"]."@@");
 
-
-            
 
             $openFile = fopen("Quiz.txt","a");
             for($x = 0; $x <= $quantity; $x++){

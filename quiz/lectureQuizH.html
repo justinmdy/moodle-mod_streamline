@@ -90,18 +90,21 @@
         <form action="lectureQuizP.php" method="post">
             
             <div class="frame">
-              <div class="block2">  
-
-              <div class="block2block">
-
-              <p class="block2title">Choice number:    
-              <input type="number" name="quantity" min="1" max="9" value=1></p>
-              </div>
+              <div class="block2"> 
 
               <div class="block2block">
               <p class="block2title">Quiz id:    
               <input type="number" name="class" min="1" max="1000" value=1>
               </p>
+              </div>
+             
+
+
+              <div class="block2block">
+              <p class="block2title">Choice number:    
+              <input type="number" name="quantity" min="1" max="6" value=1>
+              </p>
+
               </div>
 
 
@@ -128,58 +131,47 @@
             <div class= "CB">
 
             <div class="section">
+            <input  type="checkbox" name="C1" value="1">
             <p>Choice 1:</p>
             <textarea name="Choice1" />choice 1</textarea>
             <br>
             </div>
 
             <div class="section">
+            <input  type="checkbox" name="C2" value="1">
             <p>Choice 2:</p>
             <textarea name="Choice2" />choice 2</textarea>
             <br>
             </div>
 
             <div class="section">
+                <input  type="checkbox" name="C3" value="1">
             <p>Choice 3:</p>
             <textarea name="Choice3" />choice 3</textarea>
             <br>
             </div>
 
             <div class="section">
+                <input  type="checkbox" name="C4" value="1">
             <p>Choice 4:</p>
             <textarea name="Choice4" />choice 4</textarea>
             <br>
             </div>
 
             <div class="section">
+                <input  type="checkbox" name="C5" value="1">
             <p>Choice 5:</p>
             <textarea name="Choice5" />choice 5</textarea>
             <br>
             </div>
 
             <div class="section">
+                <input  type="checkbox" name="C6" value="1">
             <p>Choice 6:</p>
             <textarea name="Choice6" />choice 6</textarea>
             <br>
             </div>
 
-            <div class="section">
-            <p>Choice 7:</p>
-            <textarea name="Choice7" />choice 7</textarea>
-            <br>
-            </div>
-
-            <div class="section">
-            <p>Choice 8:</p>
-            <textarea name="Choice8" />choice 8</textarea>
-            <br>
-            </div>
-
-            <div class="section">
-            <p>Choice 9:</p>
-            <textarea name="Choice9" />choice 9</textarea>
-            <br> 
-            </div>           
 
             <div class="section">
             <input type="submit" />
@@ -187,8 +179,12 @@
 
             </div>
         </form>
-    </div>
-    </div>
 
+
+    </div>
+    </div>
+    <hr>
+             <?php   echo "GG";
+        ?>
     </body>
 </html>
