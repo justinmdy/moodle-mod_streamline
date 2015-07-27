@@ -7,8 +7,8 @@
 
 <head>
     <script>
-        function colorRed(str) { 
-            document.getElementById(str).style.background = "F11";
+        function colorWrong(str) { 
+            document.getElementById(str).style.background = "111";
         }
 
         function colorGreen(str) { 
@@ -50,7 +50,7 @@
             	}
 
             if ($flag == 1){
-            	echo '<script type="text/javascript">colorRed('.$t.');</script>';
+            	echo '<script type="text/javascript">colorWrong('.$t.');</script>';
             }else{
                 echo '<script type="text/javascript">colorGreen('.$t.');</script>';
             }
@@ -62,7 +62,12 @@
 
         }
 
-        }	
+
+        }
+        echo '</form>';
+
+        echo '<a href="studentQuizH.html"><button onclick="reload("studentQuizH.html")> New Quiz</button> </a>';
+        
 	?>
 
 

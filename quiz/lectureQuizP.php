@@ -18,13 +18,17 @@
             $openF = fopen("Quiz.xml", "r+");
             fseek($openF, -7, SEEK_END);
             $str = '<Q id="'.$_POST["class"].'">'."\n";
+            echo '<div class = "QV"> Quiz '.$_POST["class"].'</div>';
+
             $str .='<Question>'.$_POST["Question"]."</Question>\n";
+            echo '<div class = "Q"> Question: '.$_POST["Question"].'</div>';
+
             $str .= "<quantity>".$quantity."</quantity>\n";
 
             for($x = 1; $x <= $quantity; $x++){
                 $str .= "<Choice".$x.">".$_POST["Choice".$x]."</Choice".$x.">\n";
+                echo '<div class = "C"> Choice'.$x.': '.$_POST["Choice".$x].'</div>';
             }
-
 
             for($x = 1; $x <= $quantity; $x++){
                 if ($_POST["C".$x]==1){
@@ -37,20 +41,6 @@
 
 
             fwrite($openF, $str);
-
-
-            $openFile = fopen("Quiz.txt","a");
-            echo $_POST["Question"]; 
- 
-            fwrite($openFile,$_POST["Question"]."@@");
-
-
-            $openFile = fopen("Quiz.txt","a");
-            for($x = 0; $x <= $quantity; $x++){
-                echo $_POST["Choice".$x]."<br>";  
-                fwrite($openFile,$_POST["Choice".$x]."##");
-            }
-            fwrite($openFile, "\n");
 
         ?><br />
     </body>
