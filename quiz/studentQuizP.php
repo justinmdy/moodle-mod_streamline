@@ -18,8 +18,7 @@
     foreach ($data->children() as $questions) {
         if ($questions["id"] == $quizId){
 
-            echo $t.". ";
-            echo $questions->Question."<br>";
+            echo '<div id="'.$t.'">'.$t.". ".$questions->Question.'</div>'."<br>";
 
             $quantity = $questions->quantity;
             $char_A = 'A';
@@ -40,9 +39,7 @@
     echo '
         <input type="submit">
         </form>';
-
     ?>
-
 
 </body>
 </html>

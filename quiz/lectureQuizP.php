@@ -1,4 +1,16 @@
 <html>
+
+<style>
+.QV{
+    width:550px;
+}
+.Q{
+    width:550px;
+}
+.C{
+    width:550px;
+}
+</style>
     <body>
 
         <?php

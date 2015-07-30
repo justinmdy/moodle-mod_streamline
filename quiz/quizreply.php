@@ -3,12 +3,13 @@
 .section{
     width: 300px;
 }
+
 </style>
 
 <head>
     <script>
         function colorWrong(str) { 
-            document.getElementById(str).style.background = "111";
+            document.getElementById(str).style.background = "F11";
         }
 
         function colorGreen(str) { 
@@ -28,7 +29,7 @@
 	    foreach ($data->children() as $questions) {
         if ($questions["id"] == $quizId){
 
-            echo '<div class = "section" id="'.$t.'">'.$t.". ".$questions->Question.'</div>'."<br>";
+            echo '<div id="'.$t.'">'.$t.". ".$questions->Question.'</div>'."<br>";
 
             $quantity = $questions->quantity;
             $char_A = 'A';
