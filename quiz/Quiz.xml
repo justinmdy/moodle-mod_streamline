@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Quiz>
+<Q id="1">
+<Question>What is for dinner?</Question>
+<quantity>4</quantity>
+<Choice1>coke</Choice1>
+<Choice2>chicken</Choice2>
+<Choice3>pizza</Choice3>
+<Choice4>beef</Choice4>
+<Answer1>1</Answer1>
+<Answer3>3</Answer3>
+</Q>
+<Q id="1">
+<Question>What should we do in holiday?</Question>
+<quantity>2</quantity>
+<Choice1>party</Choice1>
+<Choice2>study</Choice2>
+</Q>
+<Q id="2">
+<Question>Which shape do you like?</Question>
+<quantity>3</quantity>
+<Choice1>circle</Choice1>
+<Choice2>rectangle</Choice2>
+<Choice3>triangle</Choice3>
+<Answer2>2</Answer2>
+</Q>
+<Q id="1">
+<Question>Which car do u like</Question>
+<quantity>4</quantity>
+<Choice1>BMW</Choice1>
+<Choice2>benz</Choice2>
+<Choice3>nissan</Choice3>
+<Choice4>audi</Choice4>
+<Answer1>1</Answer1>
+</Q>
+<Q id="3">
+<Question>What for lunch</Question>
+<quantity>3</quantity>
+<Choice1>coke</Choice1>
+<Choice2>chip</Choice2>
+<Choice3>hamburg</Choice3>
+<Answer1>1</Answer1>
+<Answer3>3</Answer3>
+</Q>
+</Quiz>
