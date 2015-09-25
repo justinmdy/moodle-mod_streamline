@@ -1,0 +1,14 @@
+1.Unable to use microphone on mac using Safari.
+  The screen halts at the access page. (image 1)
+
+2.Incorrect calender.
+  The date is one day behind the real date. (Link: http://144.6.224.87:8080/moodle/calendar/view.php?view=upcoming&course=2) 
+
+3.Incorrect time.
+  The time is 5 hours and 4 minutes behind Sydney time when uploading event as student. (Link: http://144.6.224.87:8080/moodle/calendar/view.php?view=upcoming&course=2)
+
+4.No update to personal information.
+  No update to new E-mail address after uploading new profile. (Link: http://144.6.224.87:8080/moodle/grade/report/grader/index.php?id=2)
+
+5.Unable to send message (Link: )
+  When loging in as a teacher, I can't send message or chat in the room. (http://144.6.224.87:8080/moodle/mod/streamline/streamline_view.php?id=2)
